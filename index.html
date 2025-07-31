@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carta Para Mi Amor</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: white;
+      overflow: hidden;
+    }
+    .card {
+      max-width: 500px;
+      margin: 100px auto;
+      text-align: center;
+      padding: 30px;
+      border: 2px solid #ff66cc;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 20px #ff66cc;
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      color: #ff66cc;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #ccc;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+    .button {
+      background-color: #ff4d88;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1em;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff4d88;
+      animation: pulse 2s infinite;
+    }
+    .button:hover {
+      transform: scale(1.05);
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px #ff4d88; }
+      50% { box-shadow: 0 0 20px #ff4d88; }
+      100% { box-shadow: 0 0 10px #ff4d88; }
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.85);
+    }
+    .modal-content {
+      background-color: #000;
+      margin: 8% auto;
+      padding: 30px;
+      border: 2px solid #ff66cc;
+      border-radius: 20px;
+      max-width: 600px;
+      box-shadow: 0 0 20px #ff66cc;
+      position: relative;
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .close {
+      color: #ff66cc;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .modal h2 {
+      color: #ff66cc;
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: cursive;
+    }
+    .typing-text {
+      white-space: pre-wrap;
+      font-size: 1em;
+      color: white;
+    }
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      color: #ff3366;
+      animation: floatUp 10s linear infinite;
+      opacity: 0.6;
+      z-index: 0;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Corazones flotantes -->
+<script>
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "❣️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = 20 + Math.random() * 20 + "px";
+    heart.style.animationDuration = 6 + Math.random() * 6 + "s";
+    heart.style.animationDelay = Math.random() * 5 + "s";
+    document.body.appendChild(heart);
+  }
+</script>
+
+<!-- Carta principal -->
+<div class="card">
+  <h1>Feliz Día de la Novia, Mi Amor</h1>
+  <p class="subtitle">1 de Agosto - En este día tan especial quiero que sepas que eres el amor que ilumina mis días</p>
+  <p>Haz clic para ver lo que tengo en mi corazón ❣️</p>
+  <button class="button" onclick="abrirModal()">❣️ Abre Mi Corazón</button>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarModal()">&times;</span>
+    <h2>Para Mi Amor</h2>
+    <div class="typing-text" id="carta"></div>
+  </div>
+</div>
+
+<!-- Audios -->
+<audio id="musicaFondo" src="musica.mp3" loop></audio>
+<audio id="audioCarta" src="audio.mp3"></audio>
+
+<!-- Script -->
+<script>
+  const textoCarta = `Querida mía,
+
+Hoy es un día especial, el día de los novios, y quiero aprovechar esta oportunidad para expresarte lo que siento en mi corazón.
+
+Desde que llegaste a mi vida, has sido la única persona que ha logrado ganarse mi corazón de una manera tan profunda. Cada momento que hemos compartido, cada risa y cada conversación, han dejado una huella imborrable en mí. Eres una persona maravillosa, y estoy agradecido por cada instante que hemos vivido juntos.
+
+Sin embargo, no puedo evitar sentirme algo triste al no poder pasar este día contigo. Me duele no poder celebrar nuestro amor como realmente deseo, pero quiero que sepas que siempre estás en mis pensamientos y en mi corazón. Las circunstancias en las que estamos pueden separarnos físicamente, pero mi amor por ti es más fuerte que cualquier cosa.
+
+Tengo la fe de que algún día podremos estar juntos sin necesidad de ocultar lo que sentimos. Sueño con un futuro en el que podamos compartir cada día, donde nuestro amor pueda florecer libremente. Hasta entonces, quiero que recuerdes que siempre estaré aquí para ti, apoyándote y amándote.
+
+Te amo. ❣️`;
+
+  let yaEscribio = false;
+
+  function abrirModal() {
+    document.getElementById("modal").style.display = "block";
+    document.getElementById("musicaFondo").play();
+    document.getElementById("audioCarta").play();
+    if (!yaEscribio) {
+      escribirCarta();
+      yaEscribio = true;
+    }
+  }
+
+  function cerrarModal() {
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("musicaFondo").pause();
+  document.getElementById("audioCarta").pause();
+  document.getElementById("audioCarta").currentTime = 0;
+}
+
+  function escribirCarta() {
+    const carta = document.getElementById("carta");
+    let i = 0;
+    const velocidad = 20; // velocidad más rápida
+    function escribir() {
+      if (i < textoCarta.length) {
+        carta.textContent += textoCarta.charAt(i);
+        i++;
+        setTimeout(escribir, velocidad);
+      }
+    }
+    escribir();
+  }
+</script>
+
+</body>
+</html>
